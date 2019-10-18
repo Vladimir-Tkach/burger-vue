@@ -22,9 +22,11 @@ export default {
   },
 
   methods: {
-
+      test: ()=>{
+          return true;
+      }
   },
-  
+
 
 }
 </script>
