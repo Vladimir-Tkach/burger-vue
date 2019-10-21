@@ -1,32 +1,46 @@
 <template>
   <div id="app">
-    
+    <h1>
+      {{ text }}
+    </h1>
+    <div class="mainblock">
+      <Menu/>
+      <ContentBlock/>
+    </div>
   </div>
 </template>
 
 <script>
-//import testComponent from './components/testComponent.vue'
-
+import ContentBlock from './components/Content.vue'
+import Menu from './components/Menu.vue'
 
 export default {
   name: 'app',
 
-  data: function(){
-    return{
-      text: 'test'
+  data: function () {
+    return {
+      text: 'test Text'
     }
   },
 
-  components: {
-
+  computed: {
+    json () {
+      return this.$store.state.json
+    }
   },
 
   methods: {
-      testTwo: ()=>{
-          return true;
-      }
+
   },
 
+  created: function () {
+    // console.log(this.json.menu)
+  },
+
+  components: {
+    ContentBlock,
+    Menu
+  }
 
 }
 </script>
@@ -39,5 +53,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  h1{
+    margin: 0;
+  }
+
+  .mainblock{
+    display: flex;
+  }
 }
 </style>
