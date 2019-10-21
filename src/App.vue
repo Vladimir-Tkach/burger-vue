@@ -52,9 +52,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
   h1{
-    margin: 0;
+    margin: 30px 0;
+    text-transform: uppercase;
   }
 
   .mainblock{

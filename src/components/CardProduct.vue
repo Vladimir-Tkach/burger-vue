@@ -8,16 +8,16 @@
         <div>Цена: {{ item.price }} руб.</div>
         <span>Количество</span>
 
-        <div className='item_menu_selectAmount'>
+        <div class='item_menu_selectAmount'>
 
-          <button >+</button>
+          <button @click="add">+</button>
 
-          <input type="text" name="amount" id="input" :value='amount' onChange={this.change}/>
+          <input type="number" name="amount" id="input"  v-model="amount"/>
 
-          <button >-</button>
+          <button @click="sub">-</button>
         </div>
 
-        <button >В корзину</button>
+        <button @click="addToBasket">В корзину</button>
   </div>
 </template>
 
@@ -34,21 +34,49 @@ export default {
     props: {
         item: Object
     },
+
+    methods: {
+        add: function(){
+            this.amount++
+        },
+
+        sub: function(){
+            if (this.amount == 0) return
+            this.amount--
+        },
+
+        addToBasket: function(){
+            let newProd = this.item
+            newProd.amount = this.amount
+            this.$store.commit('addToBasket', newProd)
+        }
+    }
 }
 </script>
 
 <style lang="scss">
 .cardProduct{
-    width: 33%;
+    width: 31%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 15px 1%;
 
     border: 1px solid green;
     .imageProduct{
         width: 200px;
         height: 200px;
+    }
+    .item_menu_selectAmount{
+        display: flex;
+        justify-content: center;
+        width: 50%;
+        
+        input{
+            text-align: center;
+            width: 50%;
+        }
     }
 }
 </style>

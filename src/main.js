@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     debug: true,
     count: 10,
     json: {},
-    category: 'pizza'
+    category: 'pizza',
+    added: {}
   },
 
   mutations: {
@@ -23,6 +24,11 @@ const store = new Vuex.Store({
 
     changeCategory (state, category) {
       state.category = category
+    },
+
+    addToBasket (state, data) {
+      state.added = data
+      console.log(state.added)
     }
   }
 
