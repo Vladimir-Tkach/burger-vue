@@ -4,8 +4,21 @@
       {{ text }}
     </h1>
     <div class="mainblock">
-      <Menu/>
-      <ContentBlock/>
+        <div class="menu_basket">
+            <div class="sticky">
+                <Menu/>
+                <Basket 
+                    :added='added'
+                    :total='total'
+                />
+            </div>
+        </div>
+
+        <ContentBlock/>
+
+        <transition name='modal' appear>
+            <Modal v-show="visibleModal"/>
+        </transition>
     </div>
   </div>
 </template>
@@ -13,19 +26,33 @@
 <script>
 import ContentBlock from './components/Content.vue'
 import Menu from './components/Menu.vue'
+import Basket from './components/Basket.vue'
+import Modal from './components/Modal.vue'
 
 export default {
   name: 'app',
 
   data: function () {
     return {
-      text: 'test Text'
+      text: 'menu header!'
     }
   },
 
   computed: {
     json () {
       return this.$store.state.json
+    },
+
+    added () {
+      return this.$store.state.added
+    },
+
+    total () {
+      return this.$store.state.total
+    },
+
+    visibleModal () {
+        return this.$store.state.visibleModal
     }
   },
 
@@ -33,13 +60,11 @@ export default {
 
   },
 
-  created: function () {
-    // console.log(this.json.menu)
-  },
-
   components: {
     ContentBlock,
-    Menu
+    Menu,
+    Basket,
+    Modal
   }
 
 }
@@ -53,6 +78,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
+  display: block;
   h1{
     margin: 30px 0;
     text-transform: uppercase;
@@ -61,5 +87,20 @@ export default {
   .mainblock{
     display: flex;
   }
+
+  .menu_basket{
+    width: 20%;
+  }
+  .sticky{
+    position: sticky;
+    top: 0;
+  }
+
+    .modal-enter-active, .modal-leave-active {
+        transition: opacity .5s;
+    }
+    .modal-enter, .modal-leave-to {
+        opacity: 0;
+    }
 }
 </style>

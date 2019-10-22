@@ -38,8 +38,9 @@ export default {
 
 <style lang="scss">
 #menu{
+    
     border: 1px solid blue;
-    width: 20%;
+    width: 100%;
     max-height: 350px;
     ul{
        list-style: none;

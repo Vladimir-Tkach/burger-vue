@@ -3,7 +3,9 @@
         <card-product 
             :item="item" 
             v-for="(item, index) in selectedCategory"
-            :key="index"/>
+            :key="index"
+            :logo="urlsLogo[index]"
+        />
   </div>
 </template>
 
@@ -22,17 +24,24 @@ export default {
         return this.$store.state.json.menu || []
     },
 
+    markets () {
+        return this.$store.state.json.markets || []
+    },
+
     category () {
         return this.$store.state.category
     },
 
     selectedCategory () {
-        let newmenu = this.menu.filter(item => item.category == this.category)
-        return newmenu
+        return this.menu.filter(item => item.category == this.category)
     },
 
-    urlLogo () {
-        let logo = this.selectedCategory.map()
+    urlsLogo () {
+        let logo = this.selectedCategory.map( item =>{
+            let market = item.market
+            return market == 'subway' ? this.markets.subway : market == 'sfc' ? this.markets.sfc : market == 'doner' ? this.markets.doner : false
+        })
+        return logo
     }
   },
 
