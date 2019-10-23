@@ -1,9 +1,13 @@
 <template>
   <div class="cardProduct">
-        <img src="" alt="">
+        <img :src="logo.image" :alt="logo.name" :title="logo.name">
         <img :src='item.image' alt="image" class="imageProduct">
         <div class='item_menu_name'>{{ item.name }}</div>
-        <div class='item_menu_description'>{{ item.description }}</div>
+        <a class='item_menu_description'
+            @click="showModal"
+        >
+            {{ item.description }}
+        </a>
 
         <div>Цена: {{ item.price }} руб.</div>
         <span>Количество</span>
@@ -12,7 +16,7 @@
 
           <button @click="add">+</button>
 
-          <input type="number" name="amount" id="input"  v-model="amount"/>
+          <input type="number" name="amount" id="input"  v-model="amountProd"/>
 
           <button @click="sub">-</button>
         </div>
@@ -22,33 +26,43 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
     name: 'CardProduct',
 
     data: function () {
         return {
-            amount: 1
+            amountProd: 1
         }
     },
 
     props: {
-        item: Object
+        item: Object,
+        logo: [Object, Boolean]
     },
 
     methods: {
         add: function(){
-            this.amount++
+            this.amountProd++
         },
 
         sub: function(){
-            if (this.amount == 0) return
-            this.amount--
+            if (this.amountProd == 0) return
+            this.amountProd--
         },
 
         addToBasket: function(){
             let newProd = this.item
-            newProd.amount = this.amount
-            this.$store.commit('addToBasket', newProd)
+            // Vue.set(newProd, 'amount', +this.amountProd)
+            this.$store.commit('addToBasket', {
+                newProd,
+                amount: this.amountProd
+            })
+        },
+
+        showModal: function(){
+            this.$store.commit('showModal')
         }
     }
 }
@@ -68,6 +82,18 @@ export default {
         width: 200px;
         height: 200px;
     }
+
+    .item_menu_description{
+        padding: 5px 0;
+        color: orangered;
+        cursor: pointer;
+        transition: .5s;
+
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+
     .item_menu_selectAmount{
         display: flex;
         justify-content: center;
