@@ -1,8 +1,9 @@
 <template>
-  <div class="component">
+  <div class="component" @click="addNewComponentToProduct">
 	  <img :src="item.image" alt="">
 	  <h3> {{ item.name }} </h3>
 	  <span> {{ item.price }} руб. </span>
+
   </div>
 </template>
 
@@ -13,6 +14,24 @@ export default {
 	props: {
 		item: Object,
 		componentType: String
+	},
+
+	computed: {
+		productToBeAdded () {
+			return this.$store.state.productToBeAdded
+		}
+	},
+
+	methods: {
+		addNewComponentToProduct: function () {
+			// console.log(this.componentType)
+			// console.log(this.item.name)
+			return this.$store.commit('addNewComponentToProduct', {
+				type: this.componentType,
+				name: this.item.name,
+				price: this.item.price
+			})
+		}
 	}
 }
 </script>
@@ -23,6 +42,11 @@ export default {
 	width: 200px;
 	height: 250px;
 	margin: 10px 0;
+	transition: .5s;
+
+	&:hover{
+		background: orange;
+	}
 
 	img{
 		width: 120px;

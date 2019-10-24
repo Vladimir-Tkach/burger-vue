@@ -7,19 +7,17 @@
         <div class="menu_basket">
             <div class="sticky">
                 <Menu/>
-                <Basket 
-                    :added='added'
-                    :total='total'
-                />
+                <Basket/>
             </div>
         </div>
 
         <ContentBlock/>
 
-        <transition name='modal' appear>
-            <Modal v-show="visibleModal"/>
-        </transition>
     </div>
+
+    <transition name='modal' appear>
+        <Modal v-show="visibleModal" :startpage='startpage'/>
+    </transition>
   </div>
 </template>
 
@@ -40,19 +38,23 @@ export default {
 
   computed: {
     json () {
-      return this.$store.state.json
+        return this.$store.state.json
     },
 
     added () {
-      return this.$store.state.added
+        return this.$store.state.added
     },
 
     total () {
-      return this.$store.state.total
+        return this.$store.state.total
     },
 
     visibleModal () {
         return this.$store.state.visibleModal
+    },
+
+    startpage () {
+        return this.$store.state.modalStartPage
     }
   },
 

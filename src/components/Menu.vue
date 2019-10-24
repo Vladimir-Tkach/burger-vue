@@ -22,10 +22,6 @@ export default {
     }
   },
 
-  created: function(){
-
-  },
-
   methods: {
     selectCategory: function (name) {
     this.active = name

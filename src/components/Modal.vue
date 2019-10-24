@@ -3,7 +3,7 @@
     <div class="block" >
         <h2>выберите компоненты</h2>
         <div class="menuTitle">
-            <span v-for="(item, key, index) in menuTitles" :key="key" :data-ind='index' @click="switchTab(key, index)"> {{ item }} </span>
+            <span v-for="(item, index) in orderList" :key="index" @click="switchTab(item, index)"> {{ item  }} </span>
         </div>
 
 		<div class="btnPrevNext">
@@ -15,9 +15,11 @@
 			<ComponentProduct v-for="(item, index) in getItems(name)" :key="index" :item='item' :componentType='name'/>
 			
 			<div v-show="showResult">
-				<h3> {{ menuTitles.all }} </h3>
+				<h3> Результат! </h3>
 			</div>
         </div>
+
+		<h3>Цена: </h3>
     </div>
 
   </div>
@@ -31,29 +33,38 @@ export default {
 
     data: function(){
         return{
-            menuTitles: {
-                sizes:'Размер', 
-                breads: 'Хлеб', 
-                vegetables: 'Овощи', 
-                sauces: 'Соусы', 
-                fillings: 'Начинка', 
-                all: 'Готово!'
-			},
-			
-			orderList: ['sizes', 'breads', 'vegetables', 'sauces', 'fillings', 'all'],
-
-			name: 'sizes',
+			name: this.startpage,
 			showResult: false,
-			currentTab: 0
+			currentTab: 0,
         }
-    },
+	},
+	
+	props: {
+		startpage: String
+	},
+
+
 
     computed: {
         options () {
             return this.$store.getters.options
-        },
+		},
+
+		orderList () {
+			return this.$store.state.orderList
+		},
+
+		productToBeAdded () {
+			return this.$store.state.productToBeAdded
+		},
+
+		nameProductToAdded () {
+			return this.$store.state.nameProductToAdded
+		}
         
     },
+
+
 
     methods: {
         switchTab: function(name, index){
@@ -80,7 +91,7 @@ export default {
         },
 
         getItems: function(name){
-			if (name != 'all') {
+			if (name != 'Result') {
 				this.showResult = false
 				return this.options[name]
 			} 
@@ -101,18 +112,18 @@ export default {
 
 <style lang='scss'>
 #modal{
-    background: rgba(255, 255, 255, 0.527);
+    background: rgba(255, 255, 255, 0.795);
     position: absolute;
-	height: 100%;
-	width: 100%;
+	// height: 100%;
+	// width: 100%;
     top: 0;
-    // bottom: 0;
+    bottom: 0;
     left: 0;
-    // right: 0;
+    right: 0;
     .block{
         margin: 50px auto;
         background: rgb(230, 229, 229);
-        color: white;
+        color: rgb(0, 0, 0);
         width: 800px;
         // height: 500px;
         padding: 20px 0 50px 0;

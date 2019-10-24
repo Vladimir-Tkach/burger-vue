@@ -42,6 +42,12 @@ export default {
         logo: [Object, Boolean]
     },
 
+    computed: {
+        category () {
+        	return this.$store.state.category
+    	},
+    },
+
     methods: {
         add: function(){
             this.amountProd++
@@ -54,7 +60,6 @@ export default {
 
         addToBasket: function(){
             let newProd = this.item
-            // Vue.set(newProd, 'amount', +this.amountProd)
             this.$store.commit('addToBasket', {
                 newProd,
                 amount: this.amountProd
@@ -62,7 +67,9 @@ export default {
         },
 
         showModal: function(){
-            this.$store.commit('showModal')
+            if (this.category == 'sandwiches'){
+                this.$store.commit('showModal', this.item)
+            } else return
         }
     }
 }

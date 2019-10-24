@@ -11,7 +11,6 @@
                 <h5>{{ obj.name }}</h5>
                 <h5>{{ obj.amount }}</h5>
             </div>
-              <!-- {{ obj }} -->
           </div>
           <h3>Total: {{ total }} </h3>
         </div>
@@ -22,9 +21,14 @@
 export default {
     name: 'Basket',
 
-    props: {
-        added: Object,
-        total: Number
+    computed: {
+      added () {
+        return this.$store.state.added
+      },
+
+      total () {
+        return this.$store.state.total
+      }
     }
 
 }
