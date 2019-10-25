@@ -1,5 +1,5 @@
 <template>
-  <div class="component" @click="addNewComponentToProduct">
+  <div class="component" @click="addNewComponentToProduct" :class="{ active: isActive}">
 	  <img :src="item.image" alt="">
 	  <h3> {{ item.name }} </h3>
 	  <span> {{ item.price }} руб. </span>
@@ -9,30 +9,38 @@
 
 <script>
 export default {
-	name: 'ComponentProduct',
+  name: 'ComponentProduct',
 
-	props: {
-		item: Object,
-		componentType: String
-	},
+  data: function () {
+    return {
+	    isActive: false
+    }
+  },
 
-	computed: {
-		productToBeAdded () {
-			return this.$store.state.productToBeAdded
-		}
-	},
+  props: {
+    item: Object,
+    componentType: String,
+  },
 
-	methods: {
-		addNewComponentToProduct: function () {
-			// console.log(this.componentType)
-			// console.log(this.item.name)
-			return this.$store.commit('addNewComponentToProduct', {
-				type: this.componentType,
-				name: this.item.name,
-				price: this.item.price
-			})
-		}
-	}
+  computed: {
+    productToBeAdded () {
+      return this.$store.state.productToBeAdded
+    }
+  },
+
+  methods: {
+
+    addNewComponentToProduct: function () {
+      console.log(this.isActive)
+      this.isActive = !this.isActive
+
+      return this.$store.commit('addNewComponentToProduct', {
+        type: this.componentType,
+        name: this.item.name,
+        price: this.item.price
+      })
+    }
+  }
 }
 </script>
 
@@ -62,5 +70,9 @@ export default {
 	span{
 		color:brown;
 	}
+}
+
+.active{
+  background: orange;
 }
 </style>

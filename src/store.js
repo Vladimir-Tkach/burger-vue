@@ -13,7 +13,26 @@ const store = new Vuex.Store({
     total: 0,
     visibleModal: false,
     options: {},
-    orderList: ['sizes', 'breads', 'vegetables', 'sauces', 'fillings', 'Result'],
+    orderList: [
+      {
+        name: 'sizes',
+        max: 1
+      }, {
+        name: 'breads',
+        max: 1
+      }, {
+        name: 'vegetables',
+        max: 3
+      }, {
+        name: 'sauces',
+        max: 3
+      }, {
+        name: 'fillings',
+        max: 3
+      }, {
+        name: 'Result',
+        max:0
+      }],
     modalStartPage: 'sizes',
 
     productToBeAdded: {},
@@ -42,8 +61,6 @@ const store = new Vuex.Store({
       state.category = category
     },
 
-
-
     addToBasket (state, data) {
       if (state.added.hasOwnProperty(data.newProd.name)) {
         let newAmount = data.amount + state.added[data.newProd.name].amount
@@ -55,36 +72,32 @@ const store = new Vuex.Store({
       state.total += data.newProd.price * data.amount
     },
 
-
-
     showModal (state, item) {
       state.visibleModal = !state.visibleModal
 
-      if(item != undefined){
+      if (item != undefined) {
         Vue.set(state.productToBeAdded, item.name, item)
         state.nameProductToAdded = item.name
         // console.log(item.name)
-      } else{
+      } else {
         state.productToBeAdded = {}
       }
     },
 
-
-
     addNewComponentToProduct (state, newComponent) {
       let typeComponent = newComponent.type.slice(0, -1)
       let name = state.nameProductToAdded
-      if (typeComponent == 'size' || typeComponent == 'bread'){
+      if (typeComponent === 'size' || typeComponent === 'bread') {
         Vue.set(state.productToBeAdded[name].components, typeComponent, newComponent.name)
       } else {
         // console.log(state.productToBeAdded[name].components)
         let index = state.productToBeAdded[name].components[typeComponent].indexOf(newComponent.name)
-        if ( index == -1) {
+        if (index === -1) {
           state.productToBeAdded[name].components[typeComponent].push(newComponent.name)
         } else {
           state.productToBeAdded[name].components[typeComponent].splice(index, 1)
         }
-        console.log(state.productToBeAdded[name].price)
+        console.log(state.productToBeAdded[name].components[typeComponent])
         console.log('-----------------------')
       }
     }

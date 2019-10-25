@@ -18,14 +18,14 @@ export default {
 
   data: function () {
     return {
-        active: undefined
+      active: undefined
     }
   },
 
   methods: {
     selectCategory: function (name) {
-    this.active = name
-    this.$store.commit('changeCategory', name)
+      this.active = name
+      this.$store.commit('changeCategory', name)
     }
   }
 
@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss">
 #menu{
-    
+
     border: 1px solid blue;
     width: 100%;
     max-height: 350px;

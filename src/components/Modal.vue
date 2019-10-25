@@ -3,7 +3,7 @@
     <div class="block" >
         <h2>выберите компоненты</h2>
         <div class="menuTitle">
-            <span v-for="(item, index) in orderList" :key="index" @click="switchTab(item, index)"> {{ item  }} </span>
+            <span v-for="(item, index) in orderList" :key="index" @click="switchTab(item.name, index)"> {{ item.name  }} </span>
         </div>
 
 		<div class="btnPrevNext">
@@ -12,8 +12,11 @@
 		</div>
 
         <div class="componentsBlock">
-			<ComponentProduct v-for="(item, index) in getItems(name)" :key="index" :item='item' :componentType='name'/>
-			
+			<ComponentProduct 
+				v-for="(item, index) in getItems(name)" 
+				:key="index" :item='item' 
+				:componentType='name'/>
+
 			<div v-show="showResult">
 				<h3> Результат! </h3>
 			</div>
@@ -29,83 +32,78 @@
 import ComponentProduct from './ComponentProduct.vue'
 
 export default {
-    name: 'Modal',
+  name: 'Modal',
 
-    data: function(){
-        return{
-			name: this.startpage,
-			showResult: false,
-			currentTab: 0,
-        }
-	},
-	
-	props: {
-		startpage: String
-	},
+  data: function () {
+    return {
+      name: this.startpage,
+      showResult: false,
+	  currentTab: 0,
+    }
+  },
 
+  props: {
+    startpage: String
+  },
 
-
-    computed: {
-        options () {
-            return this.$store.getters.options
-		},
-
-		orderList () {
-			return this.$store.state.orderList
-		},
-
-		productToBeAdded () {
-			return this.$store.state.productToBeAdded
-		},
-
-		nameProductToAdded () {
-			return this.$store.state.nameProductToAdded
-		}
-        
+  computed: {
+    options () {
+      return this.$store.getters.options
     },
 
+    orderList () {
+      return this.$store.state.orderList
+    },
 
+    productToBeAdded () {
+      return this.$store.state.productToBeAdded
+    },
 
-    methods: {
-        switchTab: function(name, index){
-			if (name === 'next') {
-				if (this.currentTab == this.orderList.length - 1) return
-				else {
-					this.currentTab++
-					this.name = this.orderList[this.currentTab]
-				}
-			} else if (name === 'prev') {
-				if (this.currentTab == 0) return
-				else {
-					this.currentTab--
-					this.name = this.orderList[this.currentTab]
-				}
-			} else {
-				this.name = name
-				this.currentTab = index
-			}
-        },
+    nameProductToAdded () {
+      return this.$store.state.nameProductToAdded
+    }
 
-        closemodal: function(){
-            this.$store.commit('showModal')
-        },
+  },
 
-        getItems: function(name){
-			if (name != 'Result') {
-				this.showResult = false
-				return this.options[name]
-			} 
-			else {
-				this.showResult = true
-				return []
-			}
-		},
-		
-	},
-	
-	components: {
-		ComponentProduct
-	},
+  methods: {
+    switchTab: function (name, index) {
+      if (name === 'next') {
+        if (this.currentTab == this.orderList.length - 1) return
+        else {
+          this.currentTab++
+          this.name = this.orderList[this.currentTab].name
+        }
+      } else if (name === 'prev') {
+        if (this.currentTab == 0) return
+        else {
+          this.currentTab--
+          this.name = this.orderList[this.currentTab].name
+        }
+      } else {
+        this.name = name
+        this.currentTab = index
+      }
+    },
+
+    closemodal: function () {
+      this.$store.commit('showModal')
+    },
+
+    getItems: function (name) {
+      if (name != 'Result') {
+        this.showResult = false
+        return this.options[name]
+      } else {
+        this.showResult = true
+        return []
+      }
+    }
+
+  },
+
+  components: {
+    ComponentProduct
+  }
 
 }
 </script>
@@ -130,7 +128,7 @@ export default {
         position: relative;
         z-index: 100;
         h2{
-            margin: 0px;        
+            margin: 0px;
         }
 
         .menuTitle{

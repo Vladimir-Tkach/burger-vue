@@ -29,49 +29,49 @@
 import Vue from 'vue'
 
 export default {
-    name: 'CardProduct',
+  name: 'CardProduct',
 
-    data: function () {
-        return {
-            amountProd: 1
-        }
-    },
-
-    props: {
-        item: Object,
-        logo: [Object, Boolean]
-    },
-
-    computed: {
-        category () {
-        	return this.$store.state.category
-    	},
-    },
-
-    methods: {
-        add: function(){
-            this.amountProd++
-        },
-
-        sub: function(){
-            if (this.amountProd == 0) return
-            this.amountProd--
-        },
-
-        addToBasket: function(){
-            let newProd = this.item
-            this.$store.commit('addToBasket', {
-                newProd,
-                amount: this.amountProd
-            })
-        },
-
-        showModal: function(){
-            if (this.category == 'sandwiches'){
-                this.$store.commit('showModal', this.item)
-            } else return
-        }
+  data: function () {
+    return {
+      amountProd: 1
     }
+  },
+
+  props: {
+    item: Object,
+    logo: [Object, Boolean]
+  },
+
+  computed: {
+    category () {
+        	return this.$store.state.category
+    	}
+  },
+
+  methods: {
+    add: function () {
+      this.amountProd++
+    },
+
+    sub: function () {
+      if (this.amountProd == 0) return
+      this.amountProd--
+    },
+
+    addToBasket: function () {
+      let newProd = this.item
+      this.$store.commit('addToBasket', {
+        newProd,
+        amount: this.amountProd
+      })
+    },
+
+    showModal: function () {
+      if (this.category == 'sandwiches') {
+        this.$store.commit('showModal', this.item)
+      } else return
+    }
+  }
 }
 </script>
 
@@ -105,7 +105,7 @@ export default {
         display: flex;
         justify-content: center;
         width: 50%;
-        
+
         input{
             text-align: center;
             width: 50%;

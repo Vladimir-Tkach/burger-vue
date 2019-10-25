@@ -7,7 +7,7 @@
             <span>Количество</span>
           </div>
           <div class='basket_list_body'>
-            <div v-for="(obj, name) in added" :key="name" class="basket_item"> 
+            <div v-for="(obj, name) in added" :key="name" class="basket_item">
                 <h5>{{ obj.name }}</h5>
                 <h5>{{ obj.amount }}</h5>
             </div>
@@ -19,17 +19,17 @@
 
 <script>
 export default {
-    name: 'Basket',
+  name: 'Basket',
 
-    computed: {
-      added () {
-        return this.$store.state.added
-      },
+  computed: {
+    added () {
+      return this.$store.state.added
+    },
 
-      total () {
-        return this.$store.state.total
-      }
+    total () {
+      return this.$store.state.total
     }
+  }
 
 }
 </script>
