@@ -7,19 +7,17 @@
         <div class="menu_basket">
             <div class="sticky">
                 <Menu/>
-                <Basket 
-                    :added='added'
-                    :total='total'
-                />
+                <Basket/>
             </div>
         </div>
 
         <ContentBlock/>
 
-        <transition name='modal' appear>
-            <Modal v-show="visibleModal"/>
-        </transition>
     </div>
+
+    <transition name='modal' appear>
+        <Modal v-show="visibleModal" :startpage='startpage'/>
+    </transition>
   </div>
 </template>
 
@@ -52,7 +50,11 @@ export default {
     },
 
     visibleModal () {
-        return this.$store.state.visibleModal
+      return this.$store.state.visibleModal
+    },
+
+    startpage () {
+      return this.$store.state.modalStartPage
     }
   },
 

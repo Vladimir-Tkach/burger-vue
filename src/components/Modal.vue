@@ -3,7 +3,7 @@
     <div class="block" >
         <h2>выберите компоненты</h2>
         <div class="menuTitle">
-            <span v-for="(item, key, index) in menuTitles" :key="key" :data-ind='index' @click="switchTab(key, index)"> {{ item }} </span>
+            <span v-for="(item, index) in orderList" :key="index" @click="switchTab(item.name, index)"> {{ item.name  }} </span>
         </div>
 
 		<div class="btnPrevNext">
@@ -12,12 +12,17 @@
 		</div>
 
         <div class="componentsBlock">
-			<ComponentProduct v-for="(item, index) in getItems(name)" :key="index" :item='item' :componentType='name'/>
-			
+			<ComponentProduct 
+				v-for="(item, index) in getItems(name)" 
+				:key="index" :item='item' 
+				:componentType='name'/>
+
 			<div v-show="showResult">
-				<h3> {{ menuTitles.all }} </h3>
+				<h3> Результат! </h3>
 			</div>
         </div>
+
+		<h3>Цена: </h3>
     </div>
 
   </div>
@@ -27,99 +32,103 @@
 import ComponentProduct from './ComponentProduct.vue'
 
 export default {
-    name: 'Modal',
+  name: 'Modal',
 
-    data: function(){
-        return{
-            menuTitles: {
-                sizes:'Размер', 
-                breads: 'Хлеб', 
-                vegetables: 'Овощи', 
-                sauces: 'Соусы', 
-                fillings: 'Начинка', 
-                all: 'Готово!'
-			},
-			
-			orderList: ['sizes', 'breads', 'vegetables', 'sauces', 'fillings', 'all'],
+  data: function () {
+    return {
+      name: this.startpage,
+      showResult: false,
+	  currentTab: 0,
+    }
+  },
 
-			name: 'sizes',
-			showResult: false,
-			currentTab: 0
+  props: {
+    startpage: String
+  },
+
+  computed: {
+    options () {
+      return this.$store.getters.options
+    },
+
+    orderList () {
+      return this.$store.state.orderList
+    },
+
+    productToBeAdded () {
+      return this.$store.state.productToBeAdded
+    },
+
+    nameProductToAdded () {
+      return this.$store.state.nameProductToAdded
+    }
+
+  },
+
+  methods: {
+    switchTab: function (name, index) {
+      if (name === 'next') {
+        if (this.currentTab == this.orderList.length - 1) return
+        else {
+          this.currentTab++
+          this.name = this.orderList[this.currentTab].name
         }
+      } else if (name === 'prev') {
+        if (this.currentTab == 0) return
+        else {
+          this.currentTab--
+          this.name = this.orderList[this.currentTab].name
+        }
+      } else {
+        this.name = name
+        this.currentTab = index
+      }
     },
 
-    computed: {
-        options () {
-            return this.$store.getters.options
-        },
-        
+    closemodal: function () {
+      this.$store.commit('showModal')
     },
 
-    methods: {
-        switchTab: function(name, index){
-			if (name === 'next') {
-				if (this.currentTab == this.orderList.length - 1) return
-				else {
-					this.currentTab++
-					this.name = this.orderList[this.currentTab]
-				}
-			} else if (name === 'prev') {
-				if (this.currentTab == 0) return
-				else {
-					this.currentTab--
-					this.name = this.orderList[this.currentTab]
-				}
-			} else {
-				this.name = name
-				this.currentTab = index
-			}
-        },
+    getItems: function (name) {
+      if (name != 'Result') {
+        this.showResult = false
+        return this.options[name]
+      } else {
+        this.showResult = true
+        return []
+      }
+    }
 
-        closemodal: function(){
-            this.$store.commit('showModal')
-        },
+  },
 
-        getItems: function(name){
-			if (name != 'all') {
-				this.showResult = false
-				return this.options[name]
-			} 
-			else {
-				this.showResult = true
-				return []
-			}
-		},
-		
-	},
-	
-	components: {
-		ComponentProduct
-	},
+  components: {
+    ComponentProduct
+  }
 
 }
 </script>
 
 <style lang='scss'>
 #modal{
-    background: rgba(255, 255, 255, 0.527);
+    background: rgba(255, 255, 255, 0.795);
     position: absolute;
-	height: 100%;
-	width: 100%;
+	// height: 100%;
+	// width: 100%;
     top: 0;
-    // bottom: 0;
+    bottom: 0;
     left: 0;
-    // right: 0;
+    right: 0;
     .block{
         margin: 50px auto;
         background: rgb(230, 229, 229);
-        color: white;
+        color: rgb(0, 0, 0);
         width: 800px;
         // height: 500px;
         padding: 20px 0 50px 0;
         position: relative;
         z-index: 100;
         h2{
-            margin: 0px;        
+            margin: 0px;
         }
 
         .menuTitle{

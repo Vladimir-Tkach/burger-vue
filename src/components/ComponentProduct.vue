@@ -1,19 +1,46 @@
 <template>
-  <div class="component">
+  <div class="component" @click="addNewComponentToProduct" :class="{ active: isActive}">
 	  <img :src="item.image" alt="">
 	  <h3> {{ item.name }} </h3>
 	  <span> {{ item.price }} руб. </span>
+
   </div>
 </template>
 
 <script>
 export default {
-	name: 'ComponentProduct',
+  name: 'ComponentProduct',
 
-	props: {
-		item: Object,
-		componentType: String
-	}
+  data: function () {
+    return {
+	    isActive: false
+    }
+  },
+
+  props: {
+    item: Object,
+    componentType: String,
+  },
+
+  computed: {
+    productToBeAdded () {
+      return this.$store.state.productToBeAdded
+    }
+  },
+
+  methods: {
+
+    addNewComponentToProduct: function () {
+      console.log(this.isActive)
+      this.isActive = !this.isActive
+
+      return this.$store.commit('addNewComponentToProduct', {
+        type: this.componentType,
+        name: this.item.name,
+        price: this.item.price
+      })
+    }
+  }
 }
 </script>
 
@@ -23,6 +50,11 @@ export default {
 	width: 200px;
 	height: 250px;
 	margin: 10px 0;
+	transition: .5s;
+
+	&:hover{
+		background: orange;
+	}
 
 	img{
 		width: 120px;
@@ -38,5 +70,9 @@ export default {
 	span{
 		color:brown;
 	}
+}
+
+.active{
+  background: orange;
 }
 </style>

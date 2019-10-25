@@ -11,8 +11,32 @@ const store = new Vuex.Store({
     category: 'pizza',
     added: {},
     total: 0,
-    visibleModal: true,
-    options: {}
+    visibleModal: false,
+    options: {},
+    orderList: [
+      {
+        name: 'sizes',
+        max: 1
+      }, {
+        name: 'breads',
+        max: 1
+      }, {
+        name: 'vegetables',
+        max: 3
+      }, {
+        name: 'sauces',
+        max: 3
+      }, {
+        name: 'fillings',
+        max: 3
+      }, {
+        name: 'Result',
+        max:0
+      }],
+    modalStartPage: 'sizes',
+
+    productToBeAdded: {},
+    nameProductToAdded: ''
   },
 
   getters: {
@@ -48,8 +72,34 @@ const store = new Vuex.Store({
       state.total += data.newProd.price * data.amount
     },
 
-    showModal (state) {
+    showModal (state, item) {
       state.visibleModal = !state.visibleModal
+
+      if (item != undefined) {
+        Vue.set(state.productToBeAdded, item.name, item)
+        state.nameProductToAdded = item.name
+        // console.log(item.name)
+      } else {
+        state.productToBeAdded = {}
+      }
+    },
+
+    addNewComponentToProduct (state, newComponent) {
+      let typeComponent = newComponent.type.slice(0, -1)
+      let name = state.nameProductToAdded
+      if (typeComponent === 'size' || typeComponent === 'bread') {
+        Vue.set(state.productToBeAdded[name].components, typeComponent, newComponent.name)
+      } else {
+        // console.log(state.productToBeAdded[name].components)
+        let index = state.productToBeAdded[name].components[typeComponent].indexOf(newComponent.name)
+        if (index === -1) {
+          state.productToBeAdded[name].components[typeComponent].push(newComponent.name)
+        } else {
+          state.productToBeAdded[name].components[typeComponent].splice(index, 1)
+        }
+        console.log(state.productToBeAdded[name].components[typeComponent])
+        console.log('-----------------------')
+      }
     }
 
   }
