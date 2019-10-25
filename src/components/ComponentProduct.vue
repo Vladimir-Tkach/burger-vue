@@ -20,6 +20,7 @@ export default {
   props: {
     item: Object,
     componentType: String,
+    index: Number
   },
 
   computed: {
@@ -31,13 +32,13 @@ export default {
   methods: {
 
     addNewComponentToProduct: function () {
-      console.log(this.isActive)
       this.isActive = !this.isActive
 
       return this.$store.commit('addNewComponentToProduct', {
         type: this.componentType,
         name: this.item.name,
-        price: this.item.price
+        price: this.item.price,
+        index: this.index
       })
     }
   }

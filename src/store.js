@@ -15,22 +15,28 @@ const store = new Vuex.Store({
     options: {},
     orderList: [
       {
-        name: 'sizes',
+        type: 'sizes',
+        currentAmount: 0,
         max: 1
       }, {
-        name: 'breads',
+        type: 'breads',
+        currentAmount: 0,
         max: 1
       }, {
-        name: 'vegetables',
+        type: 'vegetables',
+        currentAmount: 0,
         max: 3
       }, {
-        name: 'sauces',
+        type: 'sauces',
+        currentAmount: 0,
         max: 3
       }, {
-        name: 'fillings',
+        type: 'fillings',
+        currentAmount: 0,
         max: 3
       }, {
-        name: 'Result',
+        type: 'Result',
+        currentAmount: 0,
         max:0
       }],
     modalStartPage: 'sizes',
@@ -87,17 +93,22 @@ const store = new Vuex.Store({
     addNewComponentToProduct (state, newComponent) {
       let typeComponent = newComponent.type.slice(0, -1)
       let name = state.nameProductToAdded
+      let indexComponent = newComponent.index
+      console.log(state.orderList[indexComponent])
+
       if (typeComponent === 'size' || typeComponent === 'bread') {
         Vue.set(state.productToBeAdded[name].components, typeComponent, newComponent.name)
+        state.orderList[indexComponent].currentAmount++
       } else {
         // console.log(state.productToBeAdded[name].components)
         let index = state.productToBeAdded[name].components[typeComponent].indexOf(newComponent.name)
         if (index === -1) {
           state.productToBeAdded[name].components[typeComponent].push(newComponent.name)
+          state.orderList[indexComponent].currentAmount++
         } else {
           state.productToBeAdded[name].components[typeComponent].splice(index, 1)
+          state.orderList[indexComponent].currentAmount++
         }
-        console.log(state.productToBeAdded[name].components[typeComponent])
         console.log('-----------------------')
       }
     }

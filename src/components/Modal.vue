@@ -3,7 +3,12 @@
     <div class="block" >
         <h2>выберите компоненты</h2>
         <div class="menuTitle">
-            <span v-for="(item, index) in orderList" :key="index" @click="switchTab(item.name, index)"> {{ item.name  }} </span>
+            <span 
+				v-for="(item, index) in orderList" 
+				:key="index" 
+				@click="switchTab(item.type, index)"> 
+					{{ item.type }} {{ item.currentAmount }} 
+				</span>
         </div>
 
 		<div class="btnPrevNext">
@@ -15,7 +20,9 @@
 			<ComponentProduct 
 				v-for="(item, index) in getItems(name)" 
 				:key="index" :item='item' 
-				:componentType='name'/>
+				:componentType='name'
+				:index='currentTab'
+				/>
 
 			<div v-show="showResult">
 				<h3> Результат! </h3>
@@ -71,13 +78,13 @@ export default {
         if (this.currentTab == this.orderList.length - 1) return
         else {
           this.currentTab++
-          this.name = this.orderList[this.currentTab].name
+          this.name = this.orderList[this.currentTab].type
         }
       } else if (name === 'prev') {
         if (this.currentTab == 0) return
         else {
           this.currentTab--
-          this.name = this.orderList[this.currentTab].name
+          this.name = this.orderList[this.currentTab].type
         }
       } else {
         this.name = name
@@ -91,7 +98,7 @@ export default {
 
     getItems: function (name) {
       if (name != 'Result') {
-        this.showResult = false
+		this.showResult = false
         return this.options[name]
       } else {
         this.showResult = true
