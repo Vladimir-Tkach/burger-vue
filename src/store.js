@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import orderList from './orderComponentsList'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -13,32 +15,7 @@ const store = new Vuex.Store({
     total: 0,
     visibleModal: false,
     options: {},
-    orderList: [
-      {
-        type: 'sizes',
-        currentAmount: 0,
-        max: 1
-      }, {
-        type: 'breads',
-        currentAmount: 0,
-        max: 1
-      }, {
-        type: 'vegetables',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'sauces',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'fillings',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'Result',
-        currentAmount: 0,
-        max:0
-      }],
+    orderList,
     modalStartPage: 'sizes',
 
     productToBeAdded: {},
@@ -81,7 +58,7 @@ const store = new Vuex.Store({
     showModal (state, item) {
       state.visibleModal = !state.visibleModal
 
-      if (item != undefined) {
+      if (item !== undefined) {
         Vue.set(state.productToBeAdded, item.name, item)
         state.nameProductToAdded = item.name
         // console.log(item.name)
@@ -101,6 +78,7 @@ const store = new Vuex.Store({
         state.orderList[indexComponent].currentAmount++
       } else {
         // console.log(state.productToBeAdded[name].components)
+
         let index = state.productToBeAdded[name].components[typeComponent].indexOf(newComponent.name)
         if (index === -1) {
           state.productToBeAdded[name].components[typeComponent].push(newComponent.name)

@@ -3,11 +3,11 @@
     <div class="block" >
         <h2>выберите компоненты</h2>
         <div class="menuTitle">
-            <span 
-				v-for="(item, index) in orderList" 
-				:key="index" 
-				@click="switchTab(item.type, index)"> 
-					{{ item.type }} {{ item.currentAmount }} 
+            <span
+				v-for="(item, index) in orderList"
+				:key="index"
+				@click="switchTab(item.type, index)">
+					{{ item.type }} {{ item.currentAmount }}
 				</span>
         </div>
 
@@ -17,15 +17,39 @@
 		</div>
 
         <div class="componentsBlock">
-			<ComponentProduct 
-				v-for="(item, index) in getItems(name)" 
-				:key="index" :item='item' 
+			<ComponentProduct
+				v-for="(item, index) in getItems(name)"
+				:key="index" :item='item'
 				:componentType='name'
 				:index='currentTab'
 				/>
 
 			<div v-show="showResult">
 				<h3> Результат! </h3>
+				<div class="row">
+					<h4>Название: </h4>
+					<h4> {{ nameProductToAdded }} </h4>
+				</div>
+				<div class="row">
+					<h4>Размер: </h4>
+					<h4>{{ productToBeAdded[nameProductToAdded].components.size }}</h4>
+				</div>
+				<div class="row">
+					<h4>Хлеб: </h4>
+					<h4> {{ productToBeAdded[nameProductToAdded].components.bread }} </h4>
+				</div>
+				<div class="row">
+					<h4>Овощи: </h4>
+					<h4>{{ productToBeAdded[nameProductToAdded].components.vegetable }}</h4>
+				</div>
+				<div class="row">
+					<h4>Соусы: </h4>
+					<h4>{{ productToBeAdded[nameProductToAdded].components.sauce }}</h4>
+				</div>
+				<div class="row">
+					<h4>Начинка: </h4>
+					<h4>{{ productToBeAdded[nameProductToAdded].components.filling }}</h4>
+				</div>
 			</div>
         </div>
 
@@ -45,7 +69,7 @@ export default {
     return {
       name: this.startpage,
       showResult: false,
-	  currentTab: 0,
+	  currentTab: 0
     }
   },
 
@@ -97,8 +121,8 @@ export default {
     },
 
     getItems: function (name) {
-      if (name != 'Result') {
-		this.showResult = false
+      if (name !== 'Result') {
+        this.showResult = false
         return this.options[name]
       } else {
         this.showResult = true
@@ -162,6 +186,11 @@ export default {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-around;
+
+			.row{
+				display: flex;
+				justify-content: space-around;
+			}
 		}
     }
 }
