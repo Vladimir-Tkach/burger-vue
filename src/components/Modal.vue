@@ -45,7 +45,7 @@ export default {
     return {
       name: this.startpage,
       showResult: false,
-	  currentTab: 0,
+	    currentTab: 0,
     }
   },
 

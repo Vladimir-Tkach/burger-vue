@@ -1,63 +1,6 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 
-Vue.use(Vuex)
-
-const store = new Vuex.Store({
-  state: {
-    debug: true,
-    count: 0,
-    json: {},
-    category: 'pizza',
-    added: {},
-    total: 0,
-    visibleModal: false,
-    options: {},
-    orderList: [
-      {
-        type: 'sizes',
-        currentAmount: 0,
-        max: 1
-      }, {
-        type: 'breads',
-        currentAmount: 0,
-        max: 1
-      }, {
-        type: 'vegetables',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'sauces',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'fillings',
-        currentAmount: 0,
-        max: 3
-      }, {
-        type: 'Result',
-        currentAmount: 0,
-        max:0
-      }],
-    modalStartPage: 'sizes',
-
-    productToBeAdded: {},
-    nameProductToAdded: ''
-  },
-
-  getters: {
-    options: state => {
-      Vue.set(state.options, 'fillings', state.json.fillings)
-      Vue.set(state.options, 'sizes', state.json.sizes)
-      Vue.set(state.options, 'breads', state.json.breads)
-      Vue.set(state.options, 'vegetables', state.json.vegetables)
-      Vue.set(state.options, 'sauces', state.json.sauces)
-
-      return state.options
-    }
-  },
-
-  mutations: {
+const mutations = {
 
     getJSON (state, data) {
       state.json = data
@@ -112,9 +55,6 @@ const store = new Vuex.Store({
         console.log('-----------------------')
       }
     }
+}
 
-  }
-
-})
-
-export default store
+export default mutations
