@@ -24,7 +24,7 @@ const mutations = {
     showModal (state, item) {
       state.visibleModal = !state.visibleModal
 
-      if (item != undefined) {
+      if (item !== undefined) {
         Vue.set(state.productToBeAdded, item.name, item)
         state.nameProductToAdded = item.name
         // console.log(item.name)
@@ -44,6 +44,7 @@ const mutations = {
         state.orderList[indexComponent].currentAmount++
       } else {
         // console.log(state.productToBeAdded[name].components)
+
         let index = state.productToBeAdded[name].components[typeComponent].indexOf(newComponent.name)
         if (index === -1) {
           state.productToBeAdded[name].components[typeComponent].push(newComponent.name)
