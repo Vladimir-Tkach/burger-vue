@@ -14,11 +14,11 @@
 
         <div class='item_menu_selectAmount'>
 
-          <button @click="add">+</button>
-
-          <input type="number" name="amount" id="input"  v-model="amountProd"/>
-
           <button @click="sub">-</button>
+
+          <input type="text" name="amount" id="input"  v-model="amountProd"/>
+
+          <button @click="add">+</button>
         </div>
 
         <button @click="addToBasket">В корзину</button>
@@ -58,6 +58,7 @@ export default {
 
     addToBasket: function () {
       let newProd = this.item
+      // newProd.amount = this.amountProd
       this.$store.commit('addToBasket', {
         newProd,
         amount: this.amountProd
@@ -105,8 +106,11 @@ export default {
         width: 50%;
 
         input{
-            text-align: center;
-            width: 50%;
+          padding: 0 5px;
+          // display: flex;
+          // justify-content: center;
+          text-align: center;
+          width: 30%;
         }
     }
 }

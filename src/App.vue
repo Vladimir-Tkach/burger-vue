@@ -41,8 +41,8 @@ export default {
       return this.$store.state.json
     },
 
-    added () {
-      return this.$store.state.added
+    basket () {
+      return this.$store.state.basket
     },
 
     total () {

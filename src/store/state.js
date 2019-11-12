@@ -3,7 +3,7 @@ const state = {
     count: 0,
     json: {},
     category: 'pizza',
-    added: {},
+    basket: [],
     total: 0,
     visibleModal: false,
     options: {},

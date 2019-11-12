@@ -26,6 +26,9 @@ export default {
   computed: {
     productToBeAdded () {
       return this.$store.state.productToBeAdded
+    },
+    nameProductToAdded () {
+      return this.$store.state.nameProductToAdded
     }
   },
 
@@ -41,7 +44,8 @@ export default {
         index: this.index
       })
     }
-  }
+  },
+
 }
 </script>
 

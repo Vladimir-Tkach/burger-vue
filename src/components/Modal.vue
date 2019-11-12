@@ -1,59 +1,70 @@
 <template>
   <div id="modal" @click.self="closemodal" @scroll.prevent="">
     <div class="block" >
-        <h2>выберите компоненты</h2>
-        <div class="menuTitle">
-            <span
-				v-for="(item, index) in orderList"
-				:key="index"
-				@click="switchTab(item.type, index)">
-					{{ item.type }} {{ item.currentAmount }}
-				</span>
+      <h2>выберите компоненты</h2>
+      <div class="menuTitle">
+        <span
+        v-for="(item, index) in orderList"
+        :key="index"
+        @click="switchTab(item.type, index)">
+          {{ item.type }} {{ item.currentAmount }}
+        </span>
+      </div>
+
+      <div class="btnPrevNext">
+        <button @click="switchTab('prev')">Prev</button>
+        <button @click="switchTab('next')">Next</button>
+      </div>
+
+      <div class="componentsBlock">
+        <ComponentProduct
+          v-for="(item, index) in getItems(name)"
+          :key="index" 
+          :item='item'
+          :componentType='name'
+          :index='currentTab'
+        />
+
+        <div v-show="showResult">
+          <h3> Результат! </h3>
+          <div class="row">
+            <h4>Название: </h4>
+            <h4> {{ nameProductToAdded }} </h4>
+          </div>
+          <div class="row">
+            <h4>Размер: </h4>
+            <h4>
+              <!-- {{ productToBeAdded[nameProductToAdded] }} -->
+            </h4>
+          </div>
+          <div class="row">
+            <h4>Хлеб: </h4>
+            <h4>
+               <!-- {{ productToBeAdded[nameProductToAdded] }} -->
+             </h4>
+          </div>
+          <div class="row">
+            <h4>Овощи: </h4>
+            <h4>
+              <!-- {{ productToBeAdded[nameProductToAdded] }} -->
+            </h4>
+          </div>
+          <div class="row">
+            <h4>Соусы: </h4>
+            <h4>
+              <!-- {{ productToBeAdded[nameProductToAdded] }} -->
+            </h4>
+          </div>
+          <div class="row">
+            <h4>Начинка: </h4>
+            <h4>
+              <!-- {{ productToBeAdded[nameProductToAdded] }} -->
+            </h4>
+          </div>
         </div>
+      </div>
 
-		<div class="btnPrevNext">
-			<button @click="switchTab('prev')">Prev</button>
-			<button @click="switchTab('next')">Next</button>
-		</div>
-
-        <div class="componentsBlock">
-			<ComponentProduct
-				v-for="(item, index) in getItems(name)"
-				:key="index" :item='item'
-				:componentType='name'
-				:index='currentTab'
-				/>
-
-			<div v-show="showResult">
-				<h3> Результат! </h3>
-				<div class="row">
-					<h4>Название: </h4>
-					<h4> {{ nameProductToAdded }} </h4>
-				</div>
-				<div class="row">
-					<h4>Размер: </h4>
-					<h4>{{ productToBeAdded[nameProductToAdded].components.size }}</h4>
-				</div>
-				<div class="row">
-					<h4>Хлеб: </h4>
-					<h4> {{ productToBeAdded[nameProductToAdded].components.bread }} </h4>
-				</div>
-				<div class="row">
-					<h4>Овощи: </h4>
-					<h4>{{ productToBeAdded[nameProductToAdded].components.vegetable }}</h4>
-				</div>
-				<div class="row">
-					<h4>Соусы: </h4>
-					<h4>{{ productToBeAdded[nameProductToAdded].components.sauce }}</h4>
-				</div>
-				<div class="row">
-					<h4>Начинка: </h4>
-					<h4>{{ productToBeAdded[nameProductToAdded].components.filling }}</h4>
-				</div>
-			</div>
-        </div>
-
-		<h3>Цена: </h3>
+      <h3>Цена: </h3>
     </div>
 
   </div>
@@ -121,6 +132,7 @@ export default {
     },
 
     getItems: function (name) {
+      // console.log(this.productToBeAdded[this.nameProductToAdded].components);
       if (name !== 'Result') {
         this.showResult = false
         return this.options[name]
@@ -128,6 +140,11 @@ export default {
         this.showResult = true
         return []
       }
+    },
+
+    mounted() {
+        console.log(this.productToBeAdded);
+        
     }
 
   },
@@ -149,6 +166,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+    min-height: 900px;
     .block{
         margin: 50px auto;
         background: rgb(230, 229, 229);
