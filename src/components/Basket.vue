@@ -12,7 +12,7 @@
                 <h5>{{ obj.amount }}</h5>
             </div>
           </div>
-          <h3>Total: {{ total }} </h3>
+          <h3>Total: {{ totalChek }} </h3>
         </div>
   </div>
 </template>
@@ -22,13 +22,9 @@ export default {
   name: 'Basket',
 
   computed: {
-    basket () {
-      return this.$store.state.basket
-    },
+    basket () { return this.$store.state.basket },
 
-    total () {
-      return this.$store.state.total
-    }
+    totalChek () { return this.$store.state.totalChek }
   }
 
 }

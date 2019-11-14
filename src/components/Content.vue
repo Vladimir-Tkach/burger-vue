@@ -46,7 +46,7 @@ export default {
   },
 
   created: function () {
-    console.log(this.selectedCategory)
+    // console.log(this.selectedCategory)
   }
 
 }

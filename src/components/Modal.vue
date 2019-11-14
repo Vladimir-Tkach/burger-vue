@@ -4,7 +4,7 @@
       <h2>выберите компоненты</h2>
       <div class="menuTitle">
         <span
-        v-for="(item, index) in orderList"
+        v-for="(item, index) in modalTabsList"
         :key="index"
         @click="switchTab(item.type, index)">
           {{ item.type }} {{ item.currentAmount }}
@@ -78,14 +78,10 @@ export default {
 
   data: function () {
     return {
-      name: this.startpage,
+      name: this.$store.state.modalStartPage,
       showResult: false,
 	    currentTab: 0,
     }
-  },
-
-  props: {
-    startpage: String
   },
 
   computed: {
@@ -93,8 +89,8 @@ export default {
       return this.$store.getters.options
     },
 
-    orderList () {
-      return this.$store.state.orderList
+    modalTabsList () {
+      return this.$store.state.modalTabsList
     },
 
     productToBeAdded () {
@@ -110,16 +106,16 @@ export default {
   methods: {
     switchTab: function (name, index) {
       if (name === 'next') {
-        if (this.currentTab == this.orderList.length - 1) return
+        if (this.currentTab == this.modalTabsList.length - 1) return
         else {
           this.currentTab++
-          this.name = this.orderList[this.currentTab].type
+          this.name = this.modalTabsList[this.currentTab].type
         }
       } else if (name === 'prev') {
         if (this.currentTab == 0) return
         else {
           this.currentTab--
-          this.name = this.orderList[this.currentTab].type
+          this.name = this.modalTabsList[this.currentTab].type
         }
       } else {
         this.name = name
@@ -141,11 +137,6 @@ export default {
         return []
       }
     },
-
-    mounted() {
-        console.log(this.productToBeAdded);
-        
-    }
 
   },
 

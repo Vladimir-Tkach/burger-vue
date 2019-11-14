@@ -16,7 +16,7 @@
     </div>
 
     <transition name='modal' appear>
-        <Modal v-show="visibleModal" :startpage='startpage'/>
+        <Modal v-show="visibleModal" />
     </transition>
   </div>
 </template>
@@ -45,10 +45,6 @@ export default {
       return this.$store.state.basket
     },
 
-    total () {
-      return this.$store.state.total
-    },
-
     visibleModal () {
       return this.$store.state.visibleModal
     },
@@ -56,10 +52,6 @@ export default {
     startpage () {
       return this.$store.state.modalStartPage
     }
-  },
-
-  methods: {
-
   },
 
   components: {

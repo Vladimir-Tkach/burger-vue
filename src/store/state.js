@@ -3,11 +3,11 @@ const state = {
     count: 0,
     json: {},
     category: 'pizza',
-    basket: [],
-    total: 0,
+    basket: {},
+    totalChek: 0,
     visibleModal: false,
     options: {},
-    orderList: [
+    modalTabsList: [
       {
         type: 'sizes',
         currentAmount: 0,
